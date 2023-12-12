@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Replace All Characters A and c" | tr 'Ac' 'Ze'
+echo "YourInputString" | tr 'Ac' 'Ze'
