@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $((128 + true_knowledge_value))
+echo $((128 + $TRUSTKNOWLEDGE))
