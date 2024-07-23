@@ -1,30 +1,6 @@
-#!/bin/bash
-
-# Create nginx user if it doesn't exist
-if ! id -u nginx > /dev/null 2>&1; then
-    useradd -r -s /sbin/nologin nginx
-fi
-
-# Update nginx configuration file
-NGINX_CONF="/etc/nginx/nginx.conf"
-
-# Backup original configuration
-cp $NGINX_CONF $NGINX_CONF.backup
-
-# Update user and port in nginx configuration
-sed -i 's/^user .*;/user nginx;/' $NGINX_CONF
-sed -i 's/^listen .*;/listen 8080;/' /etc/nginx/sites-available/default
-
-# Set ownership of web directory
-WEB_DIR="/var/www/html"
-chown -R nginx:nginx $WEB_DIR
-
-# Ensure correct permissions
-chmod -R 755 $WEB_DIR
-
-# Restart nginx service
-systemctl restart nginx
-
-# Check if nginx is running as the correct user
-ps aux | grep nginx | grep -v grep
-
+#!/usr/bin/env bash
+# makes nginx run as user nginx
+sudo pkill apache2
+sudo chmod 644 /etc/nginx/nginx.conf
+sudo sed -i 's/80/8080/' /etc/nginx/sites-enabled/default
+sudo su nginx -c "service nginx start"
